@@ -38,7 +38,8 @@
 
   function numberPress(number) {
     if (MemoryNewNumber) {
-      display.value = number;
+      if (display.value === '-') display.value += number;
+      else display.value = number
       MemoryNewNumber = false;
     } else {
       if (display.value === '0') {
@@ -50,8 +51,19 @@
     // monitor.value += number
   }
 
+// основные операции калькуоятора *************************************************
+
   function operationPress(op) {
     let localOperationMemory = display.value;
+
+    if (display.value === '') {
+      if (op === '-') {
+        console.log(+localOperationMemory);
+        MemoryCurrentNumber = '-'
+        display.value = MemoryCurrentNumber;
+        return
+      } 
+    }
 
     if (MemoryNewNumber && op !== '=') {
       console.log(1)
@@ -59,12 +71,19 @@
       display.value = MemoryCurrentNumber;
 
       if (monitor.value.length === 0) {
-        monitor.value = display.value + ' ' + 'op'
+        monitor.value = display.value + ' ' + op
         display.value = ''
       }
 
-      monitor.value = monitor.value.substr(0, monitor.value.length-2) +  op + ' '; // получаем новый знак и вводим его в новый инпут
-      MemoryPendingOperation = op // присваиваем операцию в буфер для ожидания
+      if (monitor.value.substr(-2, 1) === '=') {
+        monitor.value = MemoryCurrentNumber + ' ' + op + ' '
+        display.value = ''
+      } else if (monitor.value.substr(-2, 1) === '+') {
+        monitor.value = monitor.value.substr(0, monitor.value.length-2) + op + ' '; // получаем новый знак и вводим его в новый инпут
+        if (op !== '=') MemoryPendingOperation = op // присваиваем операцию в буфер для ожидания
+      }
+      
+
     } else {
       console.log(display.value, 'display.value')
 
@@ -74,31 +93,35 @@
         // console.log(3)
         monitor.value = display.value + ' ' +  op + ' '; // добавили инфу в новый инпут
       }
+      
+      let oldNumber = MemoryCurrentNumber
 
-      if (MemoryPendingOperation === '+') {
-        monitor.value = ''
-        MemoryCurrentNumber += +localOperationMemory;
-      } else if (MemoryPendingOperation === '-') {
-        monitor.value = ''
+      if (MemoryPendingOperation === '-') {
         MemoryCurrentNumber -= +localOperationMemory;
+        monitor.value = MemoryCurrentNumber + ' ' + op + ' '
       } else if (MemoryPendingOperation === '*') {
-        monitor.value = ''
         MemoryCurrentNumber *= +localOperationMemory;
+        monitor.value = MemoryCurrentNumber + ' ' + op + ' '
       } else if (MemoryPendingOperation === '/') {
-        monitor.value = ''
         MemoryCurrentNumber /= +localOperationMemory;
+        monitor.value = MemoryCurrentNumber + ' ' + op + ' '
       } else if (MemoryPendingOperation === '^') {
-        monitor.value = ''
         MemoryCurrentNumber = Math.pow(MemoryCurrentNumber, +localOperationMemory);
+        monitor.value = MemoryCurrentNumber + ' ' + op + ' '
+      } else if (MemoryPendingOperation === '+') {
+        MemoryCurrentNumber += +localOperationMemory;
+        monitor.value = MemoryCurrentNumber + ' ' + op + ' '
       } else {
-        // console.log(op)
-        if (op === '-') {
-          MemoryCurrentNumber = '-'
-        } else {
-          MemoryCurrentNumber = +localOperationMemory;
-        }
+        MemoryCurrentNumber = +localOperationMemory;
       }
-      // console.log(MemoryCurrentNumber, localOperationMemory)
+
+      if (op === '=') {
+        monitor.value = oldNumber + ' ' + MemoryPendingOperation + ' ' + localOperationMemory + ' = '
+        display.value = MemoryCurrentNumber
+        // MemoryPendingOperation = op;
+        // return
+      } 
+
       display.value = MemoryCurrentNumber;
       MemoryPendingOperation = op;
       
