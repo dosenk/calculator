@@ -6,6 +6,8 @@
   const result = document.querySelector('#result'); // равно
   const display = document.querySelector('#display'); // второй инпут
   const monitor = document.querySelector('#monitor'); // инпут подсказка
+  const sqtrBtn = document.querySelector('#sqrt')
+  const powBtn = document.querySelector('#pow')
   let MemoryCurrentNumber = '';
   let MemoryNewNumber = false;
   let MemoryPendingOperation = '';
@@ -32,6 +34,7 @@
   }
 
   decimalBtn.addEventListener('click', decimal);
+  sqtrBtn.addEventListener('click', sqtr);
 
   function numberPress(number) {
     if (MemoryNewNumber) {
@@ -52,16 +55,23 @@
 
     if (MemoryNewNumber && op !== '=') {
       console.log(1)
+
       display.value = MemoryCurrentNumber;
+
       if (monitor.value.length === 0) {
         monitor.value = display.value + ' ' + 'op'
         display.value = ''
       }
+
       monitor.value = monitor.value.substr(0, monitor.value.length-2) +  op + ' '; // получаем новый знак и вводим его в новый инпут
       MemoryPendingOperation = op // присваиваем операцию в буфер для ожидания
     } else {
+      console.log(display.value, 'display.value')
+
       MemoryNewNumber = true;
+
       if (op !== '=') {
+        // console.log(3)
         monitor.value = display.value + ' ' +  op + ' '; // добавили инфу в новый инпут
       }
 
@@ -77,9 +87,18 @@
       } else if (MemoryPendingOperation === '/') {
         monitor.value = ''
         MemoryCurrentNumber /= +localOperationMemory;
+      } else if (MemoryPendingOperation === '^') {
+        monitor.value = ''
+        MemoryCurrentNumber = Math.pow(MemoryCurrentNumber, +localOperationMemory);
       } else {
-        MemoryCurrentNumber = +localOperationMemory;
+        // console.log(op)
+        if (op === '-') {
+          MemoryCurrentNumber = '-'
+        } else {
+          MemoryCurrentNumber = +localOperationMemory;
+        }
       }
+      // console.log(MemoryCurrentNumber, localOperationMemory)
       display.value = MemoryCurrentNumber;
       MemoryPendingOperation = op;
       
@@ -113,5 +132,10 @@
     }
   }
 
+    function sqtr() {
+    display.value = Math.sqrt(display.value)
+    MemoryCurrentNumber = monitor.value
+    MemoryNewNumber = false
+  }
  }  
    
