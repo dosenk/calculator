@@ -86,10 +86,9 @@ export default class Calculator {
             } else {
                 this.currentNumber = this.memoryNumber;
             }
-                console.log(this.operationMemory, 1);
-                
-                if (this.operationMemory === '=' && operation === '=') this.operationMemory = ''
-                if (this.operationMemory === '' && operation === '=') return
+
+                if (this.operationMemory === '=' && operation === '=') this.operationMemory = '' // запрет на вывод повторного =
+                if (this.operationMemory === '' && operation === '=') return                     // запрет на вывод повторного =
 
                 this.displayMain.value = this.currentNumber
                 this.drowDisplayInfo(operation, this.prevCurrentNumber)
