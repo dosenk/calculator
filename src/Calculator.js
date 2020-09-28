@@ -46,6 +46,10 @@ export default class Calculator {
 
     // метод обработки нажатия на цифры
     numberPress(number) {
+        console.log(this.memoryNewNumberFlag);
+        if (this.operationCounter === 0)  {
+            this.displayInfo.value = ''
+        }
         if (this.memoryNewNumberFlag) {
             this.displayMain.value = number;
             this.memoryNewNumberFlag = false;
@@ -64,7 +68,7 @@ export default class Calculator {
 
         this.memoryNumber = +this.displayMain.value
 
-        if (!this.memoryNewNumberFlag) {
+        if (!this.memoryNewNumberFlag || this.operationCounter === 0) {
             this.memoryNewNumberFlag = true
             this.prevCurrentNumber = this.currentNumber
             
@@ -81,21 +85,29 @@ export default class Calculator {
             } else {
                 this.currentNumber = this.memoryNumber;
             }
+                console.log(1);
                 this.displayMain.value = this.currentNumber
                 this.drowDisplayInfo(operation, this.prevCurrentNumber)
                 this.operationMemory = operation // меняем операцию
         } else if (operation !== '=') {
-            this.drowDisplayInfo(operation, this.prevCurrentNumber)
+            console.log(2);
+            this.drowDisplayInfo(operation, this.prevCurrentNumber, true)
             this.operationMemory = operation
         }
     }
 
-    drowDisplayInfo(operation, prevCurrentNumber) { // отображает инфу на втором инпуте
+    drowDisplayInfo(operation, prevCurrentNumber, flag = false) { // отображает инфу на втором инпуте
         if (operation !== '=') {
             if (this.operationCounter === 0) this.displayInfo.value = '' // обнуляем инфо инпут если это первая операция  
-            this.displayInfo.value += ' ' + this.memoryNumber + ' ' + operation
+            if (flag) {
+                this.displayInfo.value = this.displayInfo.value.substr(0, this.displayInfo.value.length - 2) + ' ' + operation
+            } else {
+                console.log('asdasdasdasdads');
+                this.displayInfo.value += ' ' + this.memoryNumber + ' ' + operation
+            }
             this.operationCounter += 1
         } else {
+            this.memoryNewNumberFlag = true
             if (prevCurrentNumber !== '') {
                 if (this.operationCounter > 1) {
                     this.displayInfo.value = this.displayInfo.value + ' ' + this.memoryNumber + ' ='
