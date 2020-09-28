@@ -2,11 +2,10 @@ export default class Calculator {
     constructor() {
         // this.memoryNumber = ''
         // this.currentNumber = ''
-        // this.operationMemory = ''
+        this.operationMemory = ''
         // this.operationCurrent = ''
         // this.prevCurrentNumber = ''
         this.operationCounter = 0
-        this.result = ''
         this.memoryNewNumberFlag = false;
         this.displayInfo = document.querySelector('#monitor')
         this.displayMain = document.querySelector('#display')
@@ -32,6 +31,8 @@ export default class Calculator {
         // обработчик на CE и С
         document.addEventListener('click', (event) => {
             if (event.target.classList.contains('clear-btn')) {
+                let id = event.target.innerText
+                this.clear(id)
                 console.log(event.target.innerText);
             }
         })
@@ -85,9 +86,14 @@ export default class Calculator {
             } else {
                 this.currentNumber = this.memoryNumber;
             }
-                console.log(1);
+                console.log(this.operationMemory, 1);
+                
+                if (this.operationMemory === '=' && operation === '=') this.operationMemory = ''
+                if (this.operationMemory === '' && operation === '=') return
+
                 this.displayMain.value = this.currentNumber
                 this.drowDisplayInfo(operation, this.prevCurrentNumber)
+                
                 this.operationMemory = operation // меняем операцию
         } else if (operation !== '=') {
             console.log(2);
@@ -116,6 +122,19 @@ export default class Calculator {
                 }
                 this.operationCounter = 0 // обнуляем счетчик после равно
             } 
+        }
+    }
+
+    clear(id) {
+        this.displayMain.value = ''
+        this.memoryNewNumberFlag = true
+
+        if (id === 'C' || this.operationMemory === '=') { // или если предыдущая операция была рано обнуляем все
+            this.memoryNumber = ''
+            this.currentNumber = ''
+            this.operationMemory = ''
+            this.displayMain.value = ''
+            this.displayInfo.value = ''
         }
     }
 }
