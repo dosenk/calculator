@@ -7,7 +7,7 @@ body {
   padding-top: 40px;
 }
 .calc {
-  background-color: #1c93ee;
+  border: 1px solid gray;
   width: 385px;
   padding: 30px;
   border-radius: 6px;
@@ -15,7 +15,7 @@ body {
 .calc-display-input {
   width: 100%;
   height: 100%;
-  background-color: #1d1d1d;
+  background-color: grey;
   color: #fff;
   text-align: right;
   font-size: 35px;
@@ -40,6 +40,7 @@ body {
 }
 .btn-hover-red:hover {
   background-color: #d83e33;
+  /* border-radius: 40%; */
   color: #f2f2f2;
 }
 .btn-hover-orange:hover {
