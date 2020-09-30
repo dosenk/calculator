@@ -69,7 +69,13 @@ export default class Calculator {
 
         this.memoryNumber = +this.displayMain.value
 
+        if (operation === '√') {
+            this.displayMain.value = Math.sqrt(this.displayMain.value)
+
+        }
+
         if (!this.memoryNewNumberFlag || this.operationCounter === 0) {
+            if (operation === '√') return
             this.memoryNewNumberFlag = true
             this.prevCurrentNumber = this.currentNumber
             
@@ -96,7 +102,7 @@ export default class Calculator {
                 this.operationMemory = operation // меняем операцию
         } else if (operation !== '=') {
             console.log(2);
-            this.drowDisplayInfo(operation, this.prevCurrentNumber, true)
+            this.drowDisplayInfo(operation, this.prevCurrentNumber, true) // обрезаем 
             this.operationMemory = operation
         }
     }
@@ -134,6 +140,7 @@ export default class Calculator {
             this.operationMemory = ''
             this.displayMain.value = ''
             this.displayInfo.value = ''
+            this.operationCounter = 0
         }
     }
 }
