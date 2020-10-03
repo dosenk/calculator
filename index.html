@@ -15,7 +15,7 @@
         <input disabled type="text" id="monitor" class="calc-display-input calc_monitor__input">
       </div>
       <div class="calc-display">
-        <input disabled type="text" id="display" value="" name="" class="calc-display-input">
+        <input disabled type="text" id="display" value="" name="helper" class="calc-display-input">
       </div>
       <div class="calc-buttons">
         <table class="calc-table">
@@ -94,8 +94,80 @@
       </div>
     </div>
   </main>
-  <script type="module" src="src/app.js">
-  </script>
+  <section class="info">
+    <div class="info_wrapper">
+      <div class="info_wrapper__heading">
+        <h2>Примеры вычислений для проверки работоспособности калькулятора и его соответствия критериям</h2>
+        <p class="text">Примеры ориентировочные, числа могут быть другими.<b> Каждое правильно выполненное вычисление
+            оцениваем в 2 балла.</b> Знак => в примерах означает клик на кнопку калькулятора "равно". Если вычисления
+          выполняются на лету и
+          результат выводится без клика по кнопке "равно", это не является ошибкой.</p>
+        <p class="text">
+        <ol class="helper">
+          <li>Базовая функциональность</li>
+          <ul class="helper_other">
+            <li><input type="checkbox" name="helper" id="helper_1"><label for="helper_1">1 + 2 => 3</label></li>
+            <li><input type="checkbox" name="helper" id="helper_2"><label for="helper_2">23 + 69.5 => 92.5</label></li>
+            <li><input type="checkbox" name="helper" id="helper_3"><label for="helper_3">74 * 3 - 5 => 217</label></li>
+            <li><input type="checkbox" name="helper" id="helper_4"><label for="helper_4">2 + 3 => 5 продолжаем ввод 4 =>
+                4 -
+                после равно
+                следующая цифра
+                перезаписывает результат</label></li>
+            <li><input type="checkbox" name="helper" id="helper_5"><label for="helper_5">есть кнопка, позволяющая
+                очистить
+                результат</label>
+            </li>
+          </ul>
+          <li>Дополнительные математические операции</li>
+          <ul class="helper_other">
+            <li><input type="checkbox" name="helper" id="helper_6"><label for="helper_6"> 25 √ => 5 или √ 25 => 5 -
+                любой
+                вариант правильный
+              </label></li>
+            <li><input type="checkbox" name="helper" id="helper_7"><label for="helper_7">9 √ + 1 => 4 или √ 9 + 1 => 4 -
+                любой
+                вариант
+                правильный</label></li>
+            <li><input type="checkbox" name="helper" id="helper_8"><label for="helper_8">2 ^ 2 => 4</label></li>
+            <li><input type="checkbox" name="helper" id="helper_9"><label for="helper_9">15 ^ 3 => 3375</label></li>
+            <li><input type="checkbox" name="helper" id="helper_10"><label for="helper_10">10.1 ^ 3 => 1030.301</label>
+            </li>
+          </ul>
+          <li>Действия с отрицательными числами</li>
+          <ul class="helper_other">
+            <li><input type="checkbox" name="helper" id="helper_11"><label for="helper_11">-9 / -3 => 3</label></li>
+            <li><input type="checkbox" name="helper" id="helper_12"><label for="helper_12">2 + -2 => 0</label></li>
+            <li><input type="checkbox" name="helper" id="helper_13"><label for="helper_13">2 / -2 => -1</label></li>
+            <li><input type="checkbox" name="helper" id="helper_14"><label for="helper_14">-9 ^ 3 => -729</label></li>
+            <li><input type="checkbox" name="helper" id="helper_15"><label for="helper_15">-9 √ => уведомление об ошибке
+                или √
+                - 9 =>
+                уведомление об ошибке -
+                любой вариант правильный</label></li>
+          </ul>
+          <li>Действия с дробями</li>
+          <ul class="helper_other">
+            <li><input type="checkbox" name="helper" id="helper_16"><label for="helper_16">0.1 + 0.2 => 0.3</label></li>
+            <li><input type="checkbox" name="helper" id="helper_17"><label for="helper_17">0.4 - 0.1 => 0.3</label></li>
+            <li><input type="checkbox" name="helper" id="helper_18"><label for="helper_18">0.0004 + 0.0004 =>
+                0.0008</label>
+            </li>
+            <li><input type="checkbox" name="helper" id="helper_19"><label for="helper_19">-0.1 * 0.2 => -0.02</label>
+            </li>
+            <li><input type="checkbox" name="helper" id="helper_20"><label for="helper_20">-0.15 + -0.15 => -0.3 - а не
+                -
+                0.30</label></li>
+          </ul>
+        </ol>
+        <hr>
+        <h2>Итого: <span id="helper_result"></span></h2>
+        </p>
+      </div>
+    </div>
+  </section>
+  <script type="module" src="src/app.js"></script>
+
 </body>
 
 </html>
