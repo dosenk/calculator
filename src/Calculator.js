@@ -37,7 +37,6 @@ export default class Calculator {
         })
     }
 
-
     // метод обработки нажатия на цифры
     numberPress(number) {
         if (this.operationCounter === 0) this.displayInfo.value = ''
@@ -51,7 +50,6 @@ export default class Calculator {
         }
     }
 
-
     // метод обработки нажатия на математические операции
     operationPress(operation) {
         if (operation === '-' && (this.displayMain.value === '' || this.displayMain.value === '-' || this.memoryNewNumberFlag === true)) {
@@ -60,12 +58,11 @@ export default class Calculator {
                 return 
             }
         }
-
-        
-
+        if (this.displayMain.value === 'Error') this.displayMain.value = 0
         if (operation === '√') { 
             if (this.displayMain.value < 0) {
-                alert('Введены неверные данные')
+                this.displayMain.value = 'Error'
+                this.memoryNewNumberFlag = true
                 return
             } else if (this.displayMain.value === '-') {
                 return
@@ -88,13 +85,17 @@ export default class Calculator {
                 this.currentNumber *= this.memoryNumber;
             } else if (this.operationMemory === '/') {
                 if (this.memoryNumber === 0) {
-                    alert('Введены неверные данные. Делить на ноль не предусмотрено данным калькулятором')
+                    this.displayInfo.value = ''
+                    this.displayMain.value = 'Error'
+                    this.memoryNewNumberFlag = true
                     return
                 }
                 this.currentNumber /= this.memoryNumber;
             } else if (this.operationMemory === '^') {
                 if (this.currentNumber === 0 && this.memoryNumber < 0) {
-                    alert('Введены неверные данные')
+                    this.displayInfo.value = ''
+                    this.displayMain.value = 'Error'
+                    this.memoryNewNumberFlag = true
                     return
                 }
                 this.currentNumber = Math.pow(this.currentNumber, this.memoryNumber);
@@ -110,11 +111,6 @@ export default class Calculator {
                 this.drowDisplayInfo(operation, this.prevCurrentNumber)
                 this.operationMemory = operation // меняем операцию
         } 
-        // else if (operation !== '=') {
-        //     console.log(2);
-        //     this.drowDisplayInfo(operation, this.prevCurrentNumber, true) // обрезаем 
-        //     this.operationMemory = operation
-        // }
     }
 
     drowDisplayInfo(operation, prevCurrentNumber, flag = false) { // отображает инфу на втором инпуте
